@@ -1,6 +1,6 @@
 import time
 
-# Dicionário que armazena os usuários e suas informações (email, senha, e características dos personagens)
+# dicionário que armazena os usuários e suas informações (email, senha, e características dos personagens)
 
 users = {}
 
@@ -25,9 +25,9 @@ def criar_novo_usuario(email, senha):
                         'inteligencia': 0,
                         'habilidade': 0,
                 'aparencia': {
-                    'cabelo': cores['1'],  # Padrão: Ciano
-                    'tronco': cores['2'],  # Padrão: Vermelho
-                    'pes': cores['3']  # Padrão: Azul
+                    'cabelo': cores['reset'],  # deixei reset como padrao pra iniciar
+                    'tronco': cores['reset'],  
+                    'pes': cores['reset']  
                 }
          } 
         }
@@ -35,15 +35,16 @@ def criar_novo_usuario(email, senha):
         print(f"Você foi cadastrado com sucesso!\n")
         time.sleep(0.5)
 
-# Função de login
+# função que valida o login
 def login(email, senha):
-    # Verifica se o email está registrado e a senha corresponde
+    # faz a comparacao
     if email in users and users[email]["senha"] == senha:
         print("Login realizado com sucesso!\n")
     else:
         print("E-mail ou senha incorretos. Tente novamente.")
         quit()
 
+# funcao pra editar as skills
 def editar_habilidades(usuario):
     personagem = users[usuario]['personagem']
     habilidades = {
@@ -63,6 +64,7 @@ def editar_habilidades(usuario):
     else:
         print("Opção inválida!")
 
+# funcao pra editar a aparencia
 def editar_aparencia(usuario):
     personagem = users[usuario]['personagem']['aparencia']
     partes = {
