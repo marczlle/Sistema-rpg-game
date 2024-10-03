@@ -16,7 +16,7 @@ cores = {
 # função para criar um novo usuário no dicionário de usuários
 def criar_novo_usuario(email, senha):
     if email in users:
-        print("Erro: O email já está cadastrado.")
+        print("O email já está cadastrado!")
     else:
         users[email] = {
                 'senha': senha,
@@ -80,7 +80,7 @@ def editar_aparencia(usuario):
     escolha_parte = input("Digite o número da parte: ")
     
     if escolha_parte in partes:
-        print("\nEscolha a cor para aplicar:")
+        print("\nEscolha a cor que você quer:")
         print("1. Ciano\n2. Vermelho\n3. Azul\n4. Amarelo")
         escolha_cor = input("Digite o número da cor: ")
         
@@ -90,7 +90,7 @@ def editar_aparencia(usuario):
         else:
             print("Opção de cor inválida!")
     else:
-        print("Opção inválida!")
+        print("Opção inválida! Tente novamente.")
 
     
 def exibir_personagem(usuario):
@@ -149,7 +149,7 @@ while True:
         novo_email = input("Digite o novo email: ")
         nova_senha = input("Digite a nova senha: ")
         criar_novo_usuario(novo_email, nova_senha)
-        time.sleep(0.3)
+        time.sleep(0.3) # esperar um pouco pra nao ficar tão confuso
 
     elif escolha == '2':
         email_login = input("Digite seu email: ")
