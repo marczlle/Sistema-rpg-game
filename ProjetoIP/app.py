@@ -25,7 +25,7 @@ def criar_novo_usuario(email, senha):
                         'inteligencia': 0,
                         'habilidade': 0,
                 'aparencia': {
-                    'cabelo': cores['reset'],  # deixei reset como padrao pra iniciar
+                    'cabelo': cores['reset'],  # deixei reset como padrao pra o usuario iniciar com o carinha todo branco
                     'tronco': cores['reset'],  
                     'pes': cores['reset']  
                 }
@@ -41,7 +41,7 @@ def login(email, senha):
     if email in users and users[email]["senha"] == senha:
         print("Login realizado com sucesso!\n")
     else:
-        print("E-mail ou senha incorretos. Tente novamente.")
+        print("E-mail ou senha incorretos. Tente novamente!")
         quit()
 
 # funcao pra editar as skills
@@ -170,12 +170,14 @@ while True:
 
 # fora do loop pra nao repetir sempre
 print(f"Olá, {nome_usuario}! Está pronto para novas aventuras?")
+
 # loop para opções do jogador já logado/cadastrado no sistema
 while True:
     print("\nO que quer fazer?")
     print("1. Editar personagem \n2. Iniciar o jogo\n3. Sair do sistema.")
     escolha = input("Digite o número da opção: ")
 
+    # menu unico do personagem
     if escolha == '1':
         if escolha == '1':
             print("\n1. Exibir meu personagem. \n2. Editar habilidades \n3. Editar aparência")
