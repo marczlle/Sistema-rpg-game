@@ -66,15 +66,17 @@ def editar_habilidades(usuario):
 
 # funcao pra editar a aparencia
 def editar_aparencia(usuario):
+    # trazendo os valores do dicionario
     personagem = users[usuario]['personagem']['aparencia']
+    # novo dicionario para as partes do corpo que podem ser personalizadas
     partes = {
         '1': 'cabelo',
         '2': 'tronco',
         '3': 'pes'
     }
     print("\nEscolha a parte do corpo para alterar a cor:")
-    for key, parte in partes.items():
-        print(f"{key}. {parte.capitalize()}")
+    for key, parte in partes.items(): # .items() retorna todos os pares chave-valor desse dicionário
+        print(f"{key}. {parte.capitalize()}") # transforma a primeira letra da string parte em maiúscula. 
     escolha_parte = input("Digite o número da parte: ")
     
     if escolha_parte in partes:
@@ -124,11 +126,11 @@ def exibir_personagem(usuario):
     # pés são "$"
 
     for row in character:
-        if "#" in row:  # Cabelo
+        if "#" in row:  # cabelo
             print(f"{aparencia['cabelo']}{row}{cores['reset']}")
-        elif "+" in row or "&" in row:  # Tronco
+        elif "+" in row or "&" in row:  # tronco
             print(f"{aparencia['tronco']}{row}{cores['reset']}")
-        elif "$" in row:  # Pés
+        elif "$" in row:  # pés
             print(f"{aparencia['pes']}{row}{cores['reset']}")
         else:
             print(row)
@@ -143,7 +145,6 @@ while True:
     escolha = input("Escolha uma opção: ")
 
     if escolha == '1':
-        # Input de email e senha para criar novo usuário
         nome_usuario = input("Digite o nome do seu personagem: ")
         novo_email = input("Digite o novo email: ")
         nova_senha = input("Digite a nova senha: ")
@@ -151,12 +152,10 @@ while True:
         time.sleep(0.3)
 
     elif escolha == '2':
-        # Input de email e senha para login
         email_login = input("Digite seu email: ")
         senha_login = input("Digite sua senha: ")
         login(email_login, senha_login)
         break
-
 
     elif escolha == '3':
         print("Encerrando o programa", end="") 
@@ -169,7 +168,7 @@ while True:
     else:
         print("Opção inválida! Tente novamente.")
 
-
+# fora do loop pra nao repetir sempre
 print(f"Olá, {nome_usuario}! Está pronto para novas aventuras?")
 # loop para opções do jogador já logado/cadastrado no sistema
 while True:
