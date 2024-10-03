@@ -4,16 +4,16 @@ import time
 
 users = {}
 
-# cores para o personagem
+# cores para o personagem   
+cores = {
+    '1': "\033[36m",  # ciano
+    '2': "\033[31m",  # vermelho
+    '3': "\033[34m",  # azul
+    '4': "\033[33m",  # amarelo
+    'reset': "\033[0m"
+}
 
-CYAN = "\033[36m"
-RED = "\033[31m"
-BLUE = "\033[34m"
-YELLOW = "\033[33m"
-RESET = "\033[0m" 
-
-
-# Função para criar um novo usuário
+# função para criar um novo usuário no dicionário de usuários
 def criar_novo_usuario(email, senha):
     if email in users:
         print("Erro: O email já está cadastrado.")
@@ -23,42 +23,77 @@ def criar_novo_usuario(email, senha):
                 'personagem': {
                         'forca': 0,
                         'inteligencia': 0,
-                        'habilidade': 0
+                        'habilidade': 0,
+                'aparencia': {
+                    'cabelo': cores['1'],  # Padrão: Ciano
+                    'tronco': cores['2'],  # Padrão: Vermelho
+                    'pes': cores['3']  # Padrão: Azul
+                }
          } 
         }
 
-        print(f"Você foi cadastrado com sucesso!")
+        print(f"Você foi cadastrado com sucesso!\n")
         time.sleep(0.5)
 
 # Função de login
 def login(email, senha):
     # Verifica se o email está registrado e a senha corresponde
-    if email in users and users[email] == senha:
+    if email in users and users[email]["senha"] == senha:
         print("Login realizado com sucesso!\n")
     else:
         print("E-mail ou senha incorretos. Tente novamente.")
         quit()
 
-
-def editar_personagem(usuario):
+def editar_habilidades(usuario):
     personagem = users[usuario]['personagem']
+    habilidades = {
+        '1': 'inteligencia',
+        '2': 'forca',
+        '3': 'habilidade'
+    }
     print("\nEscolha a habilidade para editar:")
-    print("1. Inteligência\n2. Força\n3. Habilidade")
+    for key, valor in habilidades.items():
+        print(f"{key}. {valor.capitalize()}")
     escolha = input("Digite o número da habilidade: ")
-    if escolha == '1':
-        personagem['inteligencia'] = int(input("Defina o valor da Inteligência (0-10): "))
-    elif escolha == '2':
-            personagem['forca'] = int(input("Defina o valor da Força (0-10): "))
-    elif escolha == '3':
-            personagem['habilidade'] = int(input("Defina o valor da Habilidade (0-10): "))
-    else:
-            print("Opção inválida!")
     
-    print(f'Habilidades atualizadas: Inteligência: {personagem["inteligencia"]}, Força: {personagem["forca"]}, Habilidade: {personagem["habilidade"]}')
+    if escolha in habilidades:
+        valor_novo = int(input(f"Defina o valor da {habilidades[escolha].capitalize()} (0-10): "))
+        personagem[habilidades[escolha]] = valor_novo
+        print(f'Habilidades atualizadas: Inteligência: {personagem["inteligencia"]}, Força: {personagem["forca"]}, Habilidade: {personagem["habilidade"]}')
+    else:
+        print("Opção inválida!")
+
+def editar_aparencia(usuario):
+    personagem = users[usuario]['personagem']['aparencia']
+    partes = {
+        '1': 'cabelo',
+        '2': 'tronco',
+        '3': 'pes'
+    }
+    print("\nEscolha a parte do corpo para alterar a cor:")
+    for key, parte in partes.items():
+        print(f"{key}. {parte.capitalize()}")
+    escolha_parte = input("Digite o número da parte: ")
+    
+    if escolha_parte in partes:
+        print("\nEscolha a cor para aplicar:")
+        print("1. Ciano\n2. Vermelho\n3. Azul\n4. Amarelo")
+        escolha_cor = input("Digite o número da cor: ")
+        
+        if escolha_cor in cores:
+            personagem[partes[escolha_parte]] = cores[escolha_cor]
+            print(f"Aparência atualizada: {partes[escolha_parte].capitalize()} agora está com a cor {cores[escolha_cor]}{cores['reset']}")
+        else:
+            print("Opção de cor inválida!")
+    else:
+        print("Opção inválida!")
+
     
 def exibir_personagem(usuario):
     personagem = users[usuario]['personagem']
-    print(f'\nHabilidades técnicas:\n\n\tInteligência: {personagem['inteligencia']} | Força: {personagem['forca']} | Habilidade: {personagem['habilidade']}\n')
+    aparencia = personagem['aparencia']
+    
+    print(f'\nHabilidades técnicas:\n\tInteligência: {personagem["inteligencia"]}, Força: {personagem["forca"]}, Habilidade: {personagem["habilidade"]}\n')
     
         
     character = [
@@ -86,16 +121,16 @@ def exibir_personagem(usuario):
     # tronco é "&" e "+"
     # pés são "$"
 
-        # iterando sobre as linhas do personagem
     for row in character:
-        if "#" in row:  # Condição simplificada para detectar o cabelo
-            print(f"{CYAN}{row}{RESET}")
-        elif "+" in row:
-            print(f"{BLUE}{row}{RESET}")
-        elif "$" in row:
-            print(f"{YELLOW}{row}{RESET}")
+        if "#" in row:  # Cabelo
+            print(f"{aparencia['cabelo']}{row}{cores['reset']}")
+        elif "+" in row or "&" in row:  # Tronco
+            print(f"{aparencia['tronco']}{row}{cores['reset']}")
+        elif "$" in row:  # Pés
+            print(f"{aparencia['pes']}{row}{cores['reset']}")
         else:
             print(row)
+
 
 # acabaram as funções
 
@@ -118,6 +153,7 @@ while True:
         email_login = input("Digite seu email: ")
         senha_login = input("Digite sua senha: ")
         login(email_login, senha_login)
+        break
 
 
     elif escolha == '3':
@@ -140,13 +176,17 @@ while True:
     escolha = input("Digite o número da opção: ")
 
     if escolha == '1':
-        print("\n1. Exibir meu personagem. \n2. Editar meu personagem")
-        escolha_personagem = input("O que você quer fazer? ")
-        if escolha_personagem == "1": 
-            exibir_personagem(email_login)
-        if escolha_personagem == "2":
-            editar_personagem(email_login)
-                
+        if escolha == '1':
+            print("\n1. Exibir meu personagem. \n2. Editar habilidades \n3. Editar aparência")
+            escolha_personagem = input("O que você quer fazer? ")
+            if escolha_personagem == "1": 
+                exibir_personagem(email_login)
+            elif escolha_personagem == "2":
+                editar_habilidades(email_login)
+            elif escolha_personagem == "3":
+                editar_aparencia(email_login)
+            else:
+                print("Opção inválida!")  
     elif escolha == '2':
         print("Iniciando o jogo", end="") 
         for i in range(3):
