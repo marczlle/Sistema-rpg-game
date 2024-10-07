@@ -1,5 +1,5 @@
 # Sistema-rpg-game
-Sistema de autenticação e personalização de personagem
+Sistema de autenticação e personalização de personagem em ascii art
 
 # Objetivo: 
   O objetivo deste projeto foi desenvolver um programa simples para computador que permita aos usuários criarem e personalizar seus próprios personagens. O programa fornece um sistema de login que faz a validação do usuário. A personalização do personagem incluirá características como força, inteligência, cor dos sapatos, cabelo e outros.
